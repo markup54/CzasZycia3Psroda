@@ -1,5 +1,6 @@
 package pl.zabrze.zs10.czaszycia3psroda;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -19,6 +20,13 @@ private TextView textView;
     protected void onStart() {
         super.onStart();
         Log.i("CZAS_ZYCIA","Uruchomiono OnStart");
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.i("CZAS_ZYCIA","Uruchomiono OnSaveInstanceState");
+        outState.putInt("PUNKTY",liczbaPunktow);
     }
 
     @Override
@@ -56,8 +64,13 @@ private TextView textView;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.i("CZAS_ZYCIA","Uruchomiono OnCreate");
+
         buttonDol = findViewById(R.id.imageButton2);
         textView = findViewById(R.id.textView);
+        if(savedInstanceState !=null){
+            liczbaPunktow = savedInstanceState.getInt("PUNKTY");
+            textView.setText(String.valueOf(liczbaPunktow));
+        }
         buttonDol.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
